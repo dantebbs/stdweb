@@ -92,46 +92,36 @@ impl Rect {
 /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement)
 // https://html.spec.whatwg.org/#htmlelement
 pub trait IHtmlElement: IElement {
-    /// Sets focus on the specified element, if it can be focused.
-    ///
-    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus)
-    // https://html.spec.whatwg.org/#elements-in-the-dom:dom-focus
-    fn focus( &self ) {
-        js! { @(no_return)
-            @{self.as_ref()}.focus();
-        }
+    js_translate_function!{
+        /// Sets focus on the specified element, if it can be focused.
+        ///
+        /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus)
+        // https://html.spec.whatwg.org/#elements-in-the-dom:dom-focus
+        focus:focus() => noreturn:()
     }
 
-    /// Removes keyboard focus from the current element.
-    ///
-    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur)
-    // https://html.spec.whatwg.org/#elements-in-the-dom:dom-blur
-    fn blur( &self ) {
-        js! { @(no_return)
-            @{self.as_ref()}.blur();
-        }
+    js_translate_function!{
+        /// Removes keyboard focus from the current element.
+        ///
+        /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/blur)
+        // https://html.spec.whatwg.org/#elements-in-the-dom:dom-blur
+        blur:blur() => noreturn:()
     }
 
-    /// Allows access, both in reading and writing, to all of the custom data attributes (data-*)
-    /// set on the element, either in HTML or in the DOM.
-    ///
-    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
-    // https://html.spec.whatwg.org/#elements-in-the-dom:dom-dataset
-    fn dataset( &self ) -> StringMap {
-        unsafe {
-            js!(
-                return @{self.as_ref()}.dataset;
-            ).into_reference_unchecked().unwrap()
-        }
+    js_translate_function!{
+        /// Allows access, both in reading and writing, to all of the custom data attributes (data-*)
+        /// set on the element, either in HTML or in the DOM.
+        ///
+        /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)
+        // https://html.spec.whatwg.org/#elements-in-the-dom:dom-dataset
+        dataset:dataset none => reference:StringMap
     }
 
-    /// Returns the size of an element and its position relative to the viewport.
-    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)
-    // https://drafts.csswg.org/cssom-view/#ref-for-dom-element-getboundingclientrect
-    fn get_bounding_client_rect( &self ) -> Rect {
-        js! (
-            return @{self.as_ref()}.getBoundingClientRect();
-        ).try_into().unwrap()
+    js_translate_function!{
+        /// Returns the size of an element and its position relative to the viewport.
+        /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect)
+        // https://drafts.csswg.org/cssom-view/#ref-for-dom-element-getboundingclientrect
+        get_bounding_client_rect:getBoundingClientRect() => into:Rect
     }
 
     /// Returns the layout width of an element. Typically, an element's offsetWidth is a

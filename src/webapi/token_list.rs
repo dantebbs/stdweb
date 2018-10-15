@@ -43,6 +43,28 @@ impl TokenList {
         Ok(())
     }
 
+    /// The toggle() method of the DOMTokenList interface removes a given token from the list and returns false. If token doesn't exist it's added and the function returns true.
+    ///
+    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/toggle)
+    // https://dom.spec.whatwg.org/#dom-domtokenlist-toggle
+    pub fn toggle( &self, token: &str ) -> Result< bool, TODO > {
+        Ok( js!( return @{self}.toggle( @{token} ); ).try_into().unwrap() )
+    }
+
+    /// This method is like toggle but a one-way operation. If force is set to `false`,
+    /// the token will only be removed but not added again. If set to `true`, the token
+    /// will only be added but not removed again.
+    ///
+    /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/toggle)
+    // https://dom.spec.whatwg.org/#dom-domtokenlist-toggle
+    pub fn toggle_force( &self, token: &str, force: bool ) -> Result< (), TODO > {
+        js! { @(no_return)
+            @{self}.toggle( @{token}, @{force} );
+        }
+
+        Ok(())
+    }
+
     /// Returns `true` if the underlying string contains token, otherwise `false`.
     ///
     /// [(JavaScript docs)](https://developer.mozilla.org/en-US/docs/Web/API/DOMTokenList/contains)

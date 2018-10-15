@@ -753,6 +753,7 @@ macro_rules! error_enum_boilerplate {
     }
 }
 
+#[macro_export]
 macro_rules! js_translate_function {
     ( $(#[$attr:meta])* $rust_name:ident : $js_name:ident none => $translation:ident : $return:ty ) => {
         $( #[ $attr ] )*
@@ -772,6 +773,7 @@ macro_rules! js_translate_function {
     };
 }
 
+#[macro_export]
 macro_rules! __js_translate_function_inner {
     ( $_self:ident, noreturn, $js_name:ident none ) => {
         js! { @(no_return)
